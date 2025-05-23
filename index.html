@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Write Me a Letter 💌 - WYSIWYG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Patrick+Hand:wght@400;600&family=Kalam:wght@300;400;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+      <div class="header">
+        <h1>Dear Penpal</h1>
+        <p class="subtitle">Pour your heart onto digital paper</p>
+      </div>
+
+      <div id="infoMessage" class="info-message hidden"></div>
+
+      <form id="letterForm">
+        <div class="writing-area">
+          <div class="paper" id="letterPaper">
+            <div class="letter-content">
+              <div
+                id="letterEditor"
+                class="letter-editor-area"
+                contenteditable="true"
+                aria-placeholder="Dear friend,
+
+I hope this letter finds you well..."
+                oninput="handleEditorInput()"
+                onpaste="handlePaste()"
+              ></div>
+              <div class="counters-area">
+                <div class="char-counter" id="charCounter">0 characters</div>
+                <div class="word-counter" id="wordCounter">0 words</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-controls">
+            <div class="font-controls-title">
+              🎨 Style Your Letter
+            </div>
+            <label for="font">Font Style:</label>
+            <select id="font" onchange="changeFont(this.value)">
+              <option value="Patrick Hand">Patrick Hand</option>
+              <option value="Kalam">Kalam</option>
+              <option value="Dancing Script">Dancing Script</option>
+              <option value="Homemade Apple">Homemade Apple</option>
+            </select>
+
+            <label>Text Formatting:</label>
+            <div class="formatting-buttons">
+              <button type="button" onclick="formatText('bold')" title="Bold"><b>B</b></button>
+              <button type="button" onclick="formatText('italic')" title="Italic"><i>I</i></button>
+              <button type="button" onclick="formatText('underline')" title="Underline"><u>U</u></button>
+              <button type="button" onclick="formatText('strikeThrough')" title="Strikethrough"><s>S</s></button>
+              <button type="button" class="clear-format" onclick="clearFormatting()" title="Clear Formatting">Clear</button>
+            </div>
+
+            <label for="exportFontSize">Export Font Size:</label>
+            <select id="exportFontSize">
+                <option value="16">Small (16px)</option>
+                <option value="20" selected>Medium (20px)</option>
+                <option value="24">Large (24px)</option>
+                <option value="28">Extra Large (28px)</option>
+            </select>
+
+            <label>Actions:</label>
+            <div class="action-buttons">
+              <button type="button" class="action-btn save-draft" onclick="saveDraft()">💾 Save Draft</button>
+              <button type="button" class="export-btn image" onclick="exportAsImage()">🖼️ PNG</button>
+              <button type="button" class="export-btn pdf" onclick="exportAsPDF()">📄 PDF</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-controls">
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" name="name" id="senderName" placeholder="Your Name (optional)" oninput="letterModified = true;"/>
+            </div>
+            <div class="form-group">
+              <input type="text" name="reply" id="recipientInfo" placeholder="Your Email or Insta ID (for a reply) (optional)" oninput="letterModified = true;"/>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" onclick="handleSubmit(event)">
+          📮 Send Letter
+        </button>
+      </form>
+
+      <div id="successMessage" class="success-message hidden">
+        ✨ Your heartfelt letter has been "sent"! If you chose to email, check your mail client. 💕
+      </div>
+    </div>
+
+    <canvas id="letterCanvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="emailjs-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
