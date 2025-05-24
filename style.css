@@ -12,6 +12,7 @@ body {
   padding: 1rem;
   position: relative;
   overflow-x: hidden;
+  /* padding-bottom will be adjusted by JS for mobile fixed bar */
 }
 
 body::before {
@@ -43,8 +44,7 @@ h1 {
   font-family: 'Dancing Script', cursive;
   font-size: clamp(2.5rem, 5vw, 4rem);
   margin: 0;
-  /* background: linear-gradient(45deg, #64b5f6, #81c784, #ffb74d); */ /* Original */
-  background: linear-gradient(45deg, #7cb5ec, #94c797, #ffc870); /* Softer version */
+  background: linear-gradient(45deg, #7cb5ec, #94c797, #ffc870);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -70,19 +70,16 @@ h1 {
 
 .paper {
   flex: 1;
-  /* From: background: linear-gradient(145deg, #ffffff, #f8f9fa); */
-  background-color: #ffffc6; /* Parchment-like off-white */
-  border-radius: 15px; /* Slightly less rounded */
+  background-color: #ffffc6;
+  border-radius: 15px;
   padding: 0;
-  /* From: box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 15px 12px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8); */
   box-shadow:
-    0 10px 30px rgba(9, 20, 37, 0.35), /* Softer, blue-toned shadow */
-    inset 0 1px 0px rgba(255, 255, 255, 0.4); /* Softer inset highlight */
+    0 10px 30px rgba(9, 20, 37, 0.35),
+    inset 0 1px 0px rgba(255, 255, 255, 0.4);
   position: relative;
   overflow: hidden;
   animation: fadeInUp 0.8s ease-out 0.2s both;
-  /* From: border: 1px solid rgba(255,255,255,0.2); */
-  border: 1px solid rgba(200, 190, 180, 0.5); /* Warmer, subtle border */
+  border: 1px solid rgba(200, 190, 180, 0.5);
   min-height: 700px;
   display: flex;
   flex-direction: column;
@@ -95,14 +92,12 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  /* Original: background: repeating-linear-gradient(transparent, transparent 29px, rgba(52, 152, 219, 0.1) 30px, rgba(52, 152, 219, 0.1) 31px); */
-  /* Assuming editor font-size 1.2rem and line-height 1.5625 for 30px lines */
   background:
     repeating-linear-gradient(
       transparent,
-      transparent 29px, /* Line starts after 29px of transparency */
-      rgba(180, 170, 160, 0.25) 29px, /* Muted sepia/grey line, 1px thick */
-      rgba(180, 170, 160, 0.25) 30px  /* Line ends at 30px */
+      transparent 29px,
+      rgba(180, 170, 160, 0.25) 29px,
+      rgba(180, 170, 160, 0.25) 30px
     );
   pointer-events: none;
   z-index: 1;
@@ -115,8 +110,7 @@ h1 {
   top: 0;
   bottom: 0;
   width: 2px;
-  /* From: background: rgba(231, 76, 60, 0.3); */
-  background: rgba(200, 100, 90, 0.35); /* Dustier, softer red */
+  background: rgba(200, 100, 90, 0.35);
   z-index: 1;
 }
 
@@ -134,16 +128,14 @@ h1 {
   min-height: 650px;
   padding: 2.5rem;
   padding-left: 80px;
-  font-size: 1.2rem; /* Base font size for editor */
+  font-size: 1.2rem;
   border: none;
   outline: none;
   overflow-y: auto;
   font-family: 'Patrick Hand', cursive;
   background: transparent;
-  /* From: color: #2c3e50; */
-  color: #4a3f35; /* Warmer dark text color for parchment */
-  /* From: line-height: 1.8; */
-  line-height: 1.5625; /* Adjusted to make 1.2rem font fit 30px paper lines (1.2 * 16 * 1.5625 = 30) */
+  color: #4a3f35;
+  line-height: 1.5625;
   font-weight: 400;
   border-radius: 20px;
   position: relative;
@@ -151,8 +143,7 @@ h1 {
 
 .letter-editor-area[aria-placeholder]:empty::before {
   content: attr(aria-placeholder);
-  /* From: color: #bdc3c7; */
-  color: #ab9f92; /* Softer placeholder for parchment */
+  color: #ab9f92;
   opacity: 0.8;
   position: absolute;
   top: 2.5rem;
@@ -165,15 +156,12 @@ h1 {
 .font-controls {
   flex-shrink: 0;
   width: 280px;
-  /* From: background: rgba(255,255,255,0.9); */
-  background: rgba(249, 245, 239, 0.85); /* Semi-transparent parchment */
+  background: rgba(249, 245, 239, 0.85);
   backdrop-filter: blur(8px);
   border-radius: 15px;
   padding: 1.5rem;
-  /* From: box-shadow: 0 8px 32px rgba(0,0,0,0.1); */
-  box-shadow: 0 8px 25px rgba(9, 20, 37, 0.2); /* Softer shadow */
-  /* From: border: 1px solid rgba(255,255,255,0.2); */
-  border: 1px solid rgba(249, 245, 239, 0.6); /* Matching border */
+  box-shadow: 0 8px 25px rgba(9, 20, 37, 0.2);
+  border: 1px solid rgba(249, 245, 239, 0.6);
   transition: all 0.3s ease;
   animation: fadeInUp 0.8s ease-out 0.3s both;
   height: fit-content;
@@ -190,8 +178,7 @@ h1 {
   display: block;
   margin-bottom: 0.8rem;
   font-size: 1rem;
-  /* From: color: #2c3e50; */
-  color: #5c4d41; /* Darker, warm color for labels */
+  color: #5c4d41;
   font-weight: 600;
 }
 
@@ -210,22 +197,19 @@ h1 {
 select {
   width: 100%;
   padding: 0.5rem;
-  /* From: border: 2px solid #ecf0f1; background: white; */
-  border: 1px solid #dcd0c4; /* Subtler warm border */
-  background: #fdfaf6; /* Very light, almost paper-like */
+  border: 1px solid #dcd0c4;
+  background: #fdfaf6;
   border-radius: 10px;
   font-family: inherit;
   font-size: 0.9rem;
-  /* From: color: #2c3e50; */
-  color: #4a3f35; /* Consistent text color */
+  color: #4a3f35;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
 }
 
 select:focus {
-  /* From: border-color: #3498db; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1); */
-  border-color: #c8b5a2; /* Warm accent for focus */
-  box-shadow: 0 0 0 3px rgba(200, 181, 162, 0.25); /* Warm focus shadow */
+  border-color: #c8b5a2;
+  box-shadow: 0 0 0 3px rgba(200, 181, 162, 0.25);
 }
 
 .formatting-buttons {
@@ -240,7 +224,7 @@ select:focus {
   height: 35px;
   border: none;
   border-radius: 8px;
-  background: linear-gradient(145deg, #fdfaf6, #f1f0ec); /* Lighter background */
+  background: linear-gradient(145deg, #fdfaf6, #f1f0ec);
   color: #4a3f35;
   cursor: pointer;
   display: flex;
@@ -259,7 +243,7 @@ select:focus {
 }
 
 .formatting-buttons button:hover {
-  background: linear-gradient(145deg, #3498db, #2980b9); /* Keep original blue hover */
+  background: linear-gradient(145deg, #3498db, #2980b9);
   color: white;
   transform: translateY(-1px) scale(1.05);
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.35);
@@ -320,12 +304,12 @@ select:focus {
    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
 }
 
-.action-btn:hover, .export-btn:hover { /* General hover for action/export buttons */
+.action-btn:hover, .export-btn:hover {
   transform: translateY(-2px) scale(1.03);
   filter: brightness(110%);
 }
 
-.action-btn:active, .export-btn:active { /* General active for action/export buttons */
+.action-btn:active, .export-btn:active {
   transform: translateY(0px) scale(0.98);
   filter: brightness(95%);
 }
@@ -338,16 +322,13 @@ select:focus {
 }
 
 .form-controls {
-  /* From: background: rgba(255,255,255,0.9); */
-  background: rgba(249, 245, 239, 0.85); /* Semi-transparent parchment */
+  background: rgba(249, 245, 239, 0.85);
   backdrop-filter: blur(8px);
-  border-radius: 15px; /* Consistent with paper/font-controls */
+  border-radius: 15px;
   padding: 2rem;
   margin-bottom: 2rem;
-  /* From: box-shadow: 0 15px 35px rgba(0,0,0,0.1); */
-  box-shadow: 0 8px 25px rgba(9, 20, 37, 0.2); /* Softer shadow */
-  /* From: border: 1px solid rgba(255,255,255,0.2); */
-  border: 1px solid rgba(249, 245, 239, 0.6); /* Matching border */
+  box-shadow: 0 8px 25px rgba(9, 20, 37, 0.2);
+  border: 1px solid rgba(249, 245, 239, 0.6);
   animation: fadeInUp 0.8s ease-out 0.4s both;
 }
 
@@ -365,8 +346,7 @@ select:focus {
 .form-group label {
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  /* From: color: #2c3e50; */
-  color: #5c4d41; /* Darker, warm color for labels */
+  color: #5c4d41;
 }
 
 .form-group.full-width {
@@ -375,26 +355,23 @@ select:focus {
 
 input[type="text"], input[type="email"] {
   padding: 1rem;
-  /* From: border: 2px solid #ecf0f1; background: white; */
-  border: 1px solid #dcd0c4; /* Subtler warm border */
-  background: #fdfaf6; /* Very light, almost paper-like */
-  border-radius: 10px; /* Consistent with select */
+  border: 1px solid #dcd0c4;
+  background: #fdfaf6;
+  border-radius: 10px;
   font-family: inherit;
   font-size: 1rem;
-  /* From: color: #2c3e50; */
-  color: #4a3f35; /* Consistent text color */
+  color: #4a3f35;
   transition: all 0.3s ease;
 }
 
 input[type="text"]:focus, input[type="email"]:focus {
   outline: none;
-  /* From: border-color: #3498db; box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1); */
-  border-color: #c8b5a2; /* Warm accent for focus */
-  box-shadow: 0 0 0 3px rgba(200, 181, 162, 0.25); /* Warm focus shadow */
+  border-color: #c8b5a2;
+  box-shadow: 0 0 0 3px rgba(200, 181, 162, 0.25);
   transform: translateY(-1px);
 }
 
-.checkbox-group { /* Assuming this was for a potential feature, keeping styles */
+.checkbox-group {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -407,10 +384,10 @@ input[type="text"]:focus, input[type="email"]:focus {
   transform: translateX(5px);
 }
 
-input[type="checkbox"] { /* Assuming this was for a potential feature */
+input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: #c8b5a2; /* Warm accent */
+  accent-color: #c8b5a2;
   cursor: pointer;
 }
 
@@ -444,7 +421,6 @@ button[type="submit"]::before {
 }
 
 button[type="submit"]:hover {
-  /* background: linear-gradient(145deg, #ee5a52, #e74c3c); */ /* Original, now handled by filter */
   transform: translateY(-3px) scale(1.03);
   filter: brightness(110%);
   box-shadow: 0 15px 40px rgba(238, 90, 82, 0.45);
@@ -471,16 +447,14 @@ button[type="submit"]:active {
   flex-direction: column;
   align-items: flex-end;
   z-index: 3;
-  /* From: background: rgba(255,255,255,0.8); */
-  background: rgba(249, 245, 239, 0.75); /* Match new paper/control theme */
+  background: rgba(249, 245, 239, 0.75);
   padding: 0.4rem 0.7rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .char-counter, .word-counter {
-  /* From: color: #95a5a6; */
-  color: #8a7d70; /* Darker, warm grey for text */
+  color: #8a7d70;
   font-size: 0.8rem;
 }
 
@@ -523,16 +497,16 @@ button[type="submit"]:active {
   100% { background-position: 100% 50%; }
 }
 
-/* MEDIA QUERIES - Retained from original, review for new theme if issues arise */
+/* MEDIA QUERIES */
 @media (max-width: 1024px) {
   .writing-area {
       flex-direction: column;
       align-items: stretch;
   }
-  .font-controls {
+  .font-controls { /* On tablet, font-controls might not be fixed yet, but static within flow */
       width: 100%;
-      position: static;
-      order: -1;
+      position: static; /* Default for tablet, mobile will override to fixed */
+      order: -1; /* Original order for tablet, may be overridden by mobile */
   }
   .paper {
       min-height: 500px;
@@ -542,77 +516,277 @@ button[type="submit"]:active {
    .letter-editor-area[aria-placeholder]:empty::before { top: 1.5rem; left: 70px; }
 }
 
-@media (max-width: 768px) {
-  body { padding: 0.5rem; }
-  .header { margin-bottom: 1rem; }
+
+/* MOBILE SPECIFIC STYLES (max-width: 768px) */
+/* style.css */
+/* ... (all previous styles up to the media queries) ... */
+
+/* MEDIA QUERIES */
+@media (max-width: 1024px) {
   .writing-area {
-      gap: 1rem;
-      margin-bottom: 1rem;
+      flex-direction: column;
+      align-items: stretch;
+  }
+  .font-controls {
+      width: 100%;
+      /* position: static; /* Let mobile specific override this */
+      /* order: -1; /* Let mobile specific override this */
+      /* The 1024px view might make .font-controls static or sticky differently if needed */
+      /* For now, we focus on the 768px breakpoint as per the problem */
+       margin-bottom: 1.5rem; /* Add some space below it if it's sticky or static */
   }
   .paper {
-      padding: 0;
-      min-height: 450px;
-      border-radius: 15px;
-      margin:0;
+      min-height: 500px;
       width: 100%;
   }
-  
-  .font-controls {
-      order: 0;
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-      padding: 0.75rem;
-  }
-
-  .font-controls .font-controls-title,
-  .font-controls label[for="font"],
-  .font-controls select#font + label,
-  .font-controls label[for="exportFontSize"],
-  .font-controls select#exportFontSize, /* Kept hidden as per original mobile style */
-  .font-controls .formatting-buttons + label {
-      display: none;
-  }
-
-  .font-controls select,
-  .font-controls .formatting-buttons,
-  .font-controls .action-buttons {
-      margin-bottom: 1rem;
-  }
-  .font-controls select#font {
-      margin-top: 0;
-  }
-  .font-controls .formatting-buttons,
-  .font-controls .action-buttons {
-      margin-top: 0.5rem;
-  }
-
-  .action-buttons { flex-direction: row; flex-wrap: wrap; }
-  .action-btn, .export-btn { min-width: 120px; }
-  .form-controls { padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; }
-  .form-row { grid-template-columns: 1fr; gap: 1rem; }
-  .letter-editor-area { min-height: 400px; padding: 1.5rem; padding-left: 60px; font-size: 1.1rem; line-height: 1.5625; } /* Adjusted line-height */
-  .letter-editor-area[aria-placeholder]:empty::before { top: 1.5rem; left: 60px; }
-  h1 { font-size: 2.2rem; }
-  .subtitle { font-size: 1rem; }
-  .paper::after { left: 40px; }
-  .counters-area { bottom: 0.5rem; right: 0.5rem; }
+  .letter-editor-area { min-height: 400px; padding: 1.5rem; padding-left: 70px; }
+   .letter-editor-area[aria-placeholder]:empty::before { top: 1.5rem; left: 70px; }
 }
 
+
+/* MOBILE SPECIFIC STYLES (max-width: 768px) */
+@media (max-width: 768px) {
+
+  .font-controls .font-controls-title,
+  .font-controls label, /* This will hide ALL label elements directly under .font-controls in the bar, including "Font Style:", "Actions:", etc. */
+  .font-controls select#exportFontSize,
+  .font-controls .formatting-buttons /* Hides the original placeholder for formatting buttons */
+  {
+    display: none !important;
+  }
+
+  .font-controls {
+    position: sticky; /* NEW: Make it sticky */
+    top: 0;          /* NEW: Stick to the top of its scrolling container */
+    /* If you have a global fixed header, top might be like '50px' to appear below it */
+    z-index: 999;    /* NEW: Ensure it's above other scrolling content but below modals/popups */
+
+    background: rgba(25, 25, 46, 0.95); /* Keep background for visibility */
+    backdrop-filter: blur(5px);
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2); /* Shadow for sticky bar */
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%; /* Ensure it takes full width of its parent */
+    /* height: auto; /* Keep */
+    /* margin-top: 0; /* Remove if it was for fixed bar positioning */
+    /* border-radius: 0; /* Keep if you prefer no radius for sticky bar */
+    /* border: none; /* Keep */
+    /* transform: none !important; /* Keep to override desktop hover */
+    /* order: 0; /* Remove if relying on HTML source order */
+    margin-bottom: 1rem; /* Space below the sticky bar before .form-controls */
+  }
+
+  .font-controls:hover {
+    /* transform: none; /* Already above */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  }
+
+  /* Elements to HIDE in the sticky mobile bar (formatting buttons will float) */
+  .font-controls .font-controls-title,
+  .font-controls label[for="exportFontSize"],
+  .font-controls select#exportFontSize,
+  .font-controls .formatting-buttons, /* Crucial: hide original position */
+  .font-controls select#font + label,
+  .font-controls .formatting-buttons + label
+  {
+    display: none !important;
+  }
+
+  /* Style the "Font Style" select and its label for the sticky bar */
+  .font-controls .font-style-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .font-controls label[for="font"] {
+    display: block;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    color: #e8eaed;
+    font-weight: normal;
+  }
+  .font-controls select#font {
+  padding: 0.25rem 0.5rem;   /* Reduced padding */
+    font-size: 0.7rem;       /* Reduced font size */
+    min-width: auto;           /* Remove fixed min-width to allow it to be smaller */
+    width: auto;               /* Let its width be determined by content or flex properties */
+    max-width: 120px;          /* OPTIONAL: Constrain max width if font names can be very long */
+    flex: 0 1 auto;            /* flex-grow:0, flex-shrink:1, flex-basis:auto. Allows shrinking, doesn't grow. */
+    
+    /* Keep existing styling for appearance */
+    margin-bottom: 0;
+    background: rgba(255,255,255,0.1);
+    color: #a3a3a3;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* Style the "Action Buttons" for the sticky bar */
+  .font-controls .action-buttons {
+    display: flex; 
+     flex-direction: row; 
+     gap: 0.5rem; 
+     margin-top: 0; 
+    
+    flex-grow: 1;
+    min-width: 0;
+  }
+  .font-controls .action-buttons .action-btn,
+  .font-controls .action-buttons .export-btn {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.7rem;
+    min-width: auto;
+     flex: 1 1 0px;
+  }
+  .font-controls .action-buttons .action-btn i,
+  .font-controls .action-buttons .export-btn i {
+      font-size: 0.8rem;
+  }
+
+  .font-controls > .formatting-buttons {
+        display: none !important; /* Still hide the placeholder */
+  }
+
+  /* Styles for the .formatting-buttons when they become floating (JS will add position:absolute) */
+  .formatting-buttons.floating {
+    position: absolute; 
+    display: flex; 
+    background: rgba(45, 45, 60, 0.95); 
+    backdrop-filter: blur(4px);
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 1001; 
+  }
+  .formatting-buttons.floating button {
+    width: 30px; 
+    height: 30px;
+    font-size: 0.75rem;
+    background: linear-gradient(145deg, #5a5a6e, #49495d); 
+    color: #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+   .formatting-buttons.floating button:hover {
+    background: linear-gradient(145deg, #3498db, #2980b9); 
+    color: white;
+   }
+   .formatting-buttons.floating button.clear-format {
+      width: auto; 
+      padding: 0 0.4rem;
+   }
+
+  /* Other adjustments for smaller screens */
+  .paper {
+      padding: 0;
+      min-height: 450px; 
+      border-radius: 10px; 
+      margin:0;
+  }
+  .writing-area {
+      gap: 1rem; 
+      margin-bottom: 1rem; 
+  }
+   .form-controls { 
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      margin-top: 1rem; /* Add margin above if .font-controls is directly before it */
+  }
+  .form-row {
+      grid-template-columns: 1fr; 
+      gap: 1rem;
+  }
+  .letter-editor-area {
+    min-height: 400px; 
+    padding: 1.5rem;
+    padding-left: 60px; 
+    font-size: 1.1rem;
+    line-height: 1.5625;
+  }
+  .letter-editor-area[aria-placeholder]:empty::before {
+    top: 1.5rem; left: 60px;
+  }
+  h1 { font-size: 2.2rem; }
+  .subtitle { font-size: 1rem; }
+  .paper::after { left: 40px; } 
+  .counters-area { bottom: 0.5rem; right: 0.5rem; font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+  
+   .paper {
+    order: 1; /* Ensures the paper/letter area comes first */
+  }
+
+  .font-controls {
+    order: 2; /* Places the font controls after the paper area */
+    
+    /* Adjust sticky positioning to the bottom */
+    position: sticky;
+    top: auto; /* Remove the 'top: 0' from the previous sticky behavior */
+    bottom: 0; /* Stick the control bar to the bottom of the viewport */
+    
+    margin-bottom: 0;
+  }
+
+  
+}
+
+
 @media (max-width: 480px) {
-  body { padding: 0.25rem; }
+  body {
+    padding: 0.25rem;
+    /* padding-bottom: 70px; /* REMOVE THIS */
+  }
+  .font-controls { 
+    padding: 0.4rem 0.5rem;
+    gap: 0.5rem;
+    /* top:0; /* ensure it sticks to very top */
+  }
+  .font-controls label[for="font"] {
+    font-size: 0.7rem;
+  }
+  .font-controls select#font {
+    font-size: 0.7rem;
+    min-width: 80px; 
+    padding: 0.3rem;
+  }
+  .font-controls .action-buttons .action-btn,
+  .font-controls .action-buttons .export-btn {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.65rem; 
+  }
+   .font-controls .action-buttons .action-btn i,
+   .font-controls .action-buttons .export-btn i {
+      font-size: 0.7rem;
+   }
+
   .paper {
       min-height: 350px;
-      border-radius: 12px;
-      width: 100%;
+      border-radius: 8px;
   }
-  .font-controls { padding: 0.75rem; border-radius: 12px; }
-  .form-controls { padding: 1rem; border-radius: 12px; }
-  .letter-editor-area { min-height: 300px; padding: 1rem; padding-left: 50px; font-size: 1rem; line-height: 1.5625; } /* Adjusted line-height */
-  .letter-editor-area[aria-placeholder]:empty::before { top: 1rem; left: 50px; }
+  .form-controls { padding: 1rem; border-radius: 8px; margin-top: 1rem;}
+  .letter-editor-area {
+    min-height: 300px;
+    padding: 1rem;
+    padding-left: 50px;
+    font-size: 1rem;
+    line-height: 1.5625;
+  }
+  .letter-editor-area[aria-placeholder]:empty::before {
+    top: 1rem; left: 50px;
+  }
   h1 { font-size: 1.8rem; }
   .subtitle { font-size: 0.9rem; }
-  .paper::after { left: 30px; }
-  .formatting-buttons button { width: 32px; height: 32px; font-size: 0.8rem; }
+  .paper::after { left: 30px; } 
+
+  .formatting-buttons.floating button { 
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+
   input[type="text"], input[type="email"], select { padding: 0.75rem; font-size: 0.9rem; }
   button[type="submit"] { padding: 0.75rem 2rem; font-size: 1rem; }
 }
