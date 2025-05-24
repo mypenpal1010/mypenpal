@@ -59,67 +59,95 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleFloatingToolbar() {
+        // Check if in mobile view. If not, ensure floating toolbar is hidden.
         if (window.innerWidth >= 768) {
             if (formattingButtons.classList.contains('floating')) {
                  formattingButtons.style.display = 'none';
             }
-            return;
+            return; // Exit if not in mobile view
         }
 
+        // Mobile view logic from here onwards
         const selection = window.getSelection();
-        if (selection && selection.rangeCount > 0 && !selection.isCollapsed && letterEditor.contains(selection.anchorNode) && selection.toString().trim() !== '') {
+
+        // Condition to SHOW the toolbar:
+        // 1. A selection exists (selection && selection.rangeCount > 0)
+        // 2. The selection is anchored within the letterEditor (letterEditor.contains(selection.anchorNode))
+        // 3. The selection is not collapsed (!selection.isCollapsed)
+        // 4. The selection has actual text content (selection.toString().trim() !== '')
+        if (selection && selection.rangeCount > 0 && letterEditor.contains(selection.anchorNode) &&
+            !selection.isCollapsed && selection.toString().trim() !== '') {
+
             const range = selection.getRangeAt(0);
             const rect = range.getBoundingClientRect();
 
-            formattingButtons.style.display = 'flex';
+            formattingButtons.style.display = 'flex'; // Show the toolbar
 
             let barHeight = formattingButtons.offsetHeight;
             let barWidth = formattingButtons.offsetWidth;
 
+            // If toolbar has no dimensions (e.g., not fully rendered yet or CSS issues), hide it and exit.
             if (barHeight === 0 || barWidth === 0) {
                 formattingButtons.style.display = 'none';
                 return;
             }
 
-            let top = window.scrollY + rect.top - barHeight - 8; 
-            let left = window.scrollX + rect.left + (rect.width / 2) - (barWidth / 2);
+            // Calculate initial position (above the selection)
+            let top = window.scrollY + rect.top - barHeight - 8; // 8px offset
+            let left = window.scrollX + rect.left + (rect.width / 2) - (barWidth / 2); // Centered
 
-            // Boundary checks
-            if (top < window.scrollY + 5) { // If too close to top of viewport (e.g. under sticky header)
-                top = window.scrollY + rect.bottom + 8;
+            // Boundary checks (copied from original script.js)
+
+            // 1. If toolbar is too high (overlaps top of selection or viewport), try to place below selection.
+            if (top < window.scrollY + 5) { //
+                top = window.scrollY + rect.bottom + 8; // 8px offset below
             }
-            // Sticky header adjustment (if you have one, and .font-controls is NOT that header)
-            const stickyControls = document.querySelector('.font-controls');
+
+            // Note: The original 'stickyHeaderHeight' logic for a TOP sticky bar.
+            // .font-controls is a BOTTOM sticky bar in mobile.
+            // The general viewport boundary checks should suffice. The floating toolbar has a higher z-index (1001)
+            // than the bottom sticky bar (999), so it will appear on top if they overlap.
+
+            const stickyControls = document.querySelector('.font-controls'); //
             let stickyHeaderHeight = 0;
-            if (stickyControls && getComputedStyle(stickyControls).position === 'sticky' && parseFloat(getComputedStyle(stickyControls).top) === 0) {
-                stickyHeaderHeight = stickyControls.offsetHeight;
+            // This condition for a top sticky bar (parseFloat(getComputedStyle(stickyControls).top) === 0)
+            // will generally not be true for the bottom sticky bar.
+            if (stickyControls && getComputedStyle(stickyControls).position === 'sticky' && parseFloat(getComputedStyle(stickyControls).top) === 0) { //
+                stickyHeaderHeight = stickyControls.offsetHeight; //
             }
-            if (top < window.scrollY + stickyHeaderHeight + 5 && rect.top > stickyHeaderHeight) { // Don't position under sticky header if selection below it
-                top = window.scrollY + rect.bottom + 8;
+            if (top < window.scrollY + stickyHeaderHeight + 5 && rect.top > stickyHeaderHeight) { //
+                top = window.scrollY + rect.bottom + 8; //
             }
 
 
-            if (left < window.scrollX + 5) left = window.scrollX + 5;
-            if (left + barWidth > window.scrollX + window.innerWidth - 5) {
-                left = window.scrollX + window.innerWidth - barWidth - 5;
+            // 2. Keep within horizontal viewport boundaries.
+            if (left < window.scrollX + 5) left = window.scrollX + 5; //
+            if (left + barWidth > window.scrollX + window.innerWidth - 5) { //
+                left = window.scrollX + window.innerWidth - barWidth - 5; //
             }
-            
-            // Ensure it doesn't go off bottom of screen
-            if (top + barHeight > window.scrollY + window.innerHeight - 5) {
-                top = window.scrollY + window.innerHeight - barHeight - 5;
-                 // Try to reposition above if it was forced below and now too low
-                if (rect.top - barHeight - 8 > window.scrollY + 5) { 
-                    top = window.scrollY + rect.top - barHeight - 8;
+
+            // 3. Ensure it doesn't go off the bottom of the screen.
+            if (top + barHeight > window.scrollY + window.innerHeight - 5) { //
+                top = window.scrollY + window.innerHeight - barHeight - 5; // Align to bottom of viewport
+                // If it was forced to the bottom AND there was space above the selection, try to reposition above again.
+                if (rect.top - barHeight - 8 > window.scrollY + 5) { // Check if space above original selection rect
+                    top = window.scrollY + rect.top - barHeight - 8; //
                 }
             }
-            if (top < window.scrollY + 5) top = window.scrollY + 5;
+
+            // 4. Final check: ensure it's not off the top of the screen.
+            if (top < window.scrollY + 5) top = window.scrollY + 5; //
 
 
             formattingButtons.style.top = `${top}px`;
             formattingButtons.style.left = `${left}px`;
+
         } else {
-            if (document.activeElement !== letterEditor && !formattingButtons.contains(document.activeElement)) {
-                 formattingButtons.style.display = 'none';
+            // Condition to HIDE the toolbar (selection is collapsed, empty, or not in editor):
+            // This 'else' block will now correctly trigger when a click inside the editor deselects text,
+            // or if the selection becomes invalid for any other reason in mobile view.
+            if (formattingButtons.classList.contains('floating')) {
+                formattingButtons.style.display = 'none';
             }
         }
     }
